@@ -70,7 +70,7 @@ public  class Main extends JFrame{
 		addRowsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				tableModel.addColumn(tableModel.getColumnCount(),new Object[]{});
+				tableModel.addColumn(tableModel.getColumnCount()+1,new Object[]{});
 
 			}
 		});
@@ -109,6 +109,7 @@ public  class Main extends JFrame{
 
 	private String makeTextBaseTable(String[][] tableData){
 		StringBuilder sb= new StringBuilder();
+		int maxColumnsWidth=0;
 		for (int i=0,len=tableData.length;i<len;i++){
 			StringBuilder sb2 = new StringBuilder();
 			int columnsWidth =0;
@@ -117,11 +118,14 @@ public  class Main extends JFrame{
 				sb2.append(tableData[i][j]);
 				sb2.append(BOUNDARY_CHARACTOR_VERTICAL);
 			}
+			if (maxColumnsWidth<columnsWidth){
+				maxColumnsWidth=columnsWidth;
+			}
 			sb.append(CORNER_CHARACTOR);
-			sb.append(repeatChar(BOUNDARY_CHARACTOR_HORIZONTAL,columnsWidth*2-1)).append(CORNER_CHARACTOR).append("\n")
+			sb.append(repeatChar(BOUNDARY_CHARACTOR_HORIZONTAL,maxColumnsWidth*2-1)).append(CORNER_CHARACTOR).append("\n")
 					.append(BOUNDARY_CHARACTOR_VERTICAL).append(sb2).append("\n");
-			if(i==len-1){
-				sb.append(CORNER_CHARACTOR).append(repeatChar(BOUNDARY_CHARACTOR_HORIZONTAL,columnsWidth*2-1)).append(CORNER_CHARACTOR);
+			if(i==len-1) {
+				sb.append(CORNER_CHARACTOR).append(repeatChar(BOUNDARY_CHARACTOR_HORIZONTAL, maxColumnsWidth * 2 - 1)).append(CORNER_CHARACTOR);
 			}
 		}
 		return sb.toString();
